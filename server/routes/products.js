@@ -3,15 +3,15 @@ var router = express.Router();
 
 var Product = require('../models/Product.js');
 
-/* GET /todos listing. */
+/* GET /products listing. */
 router.get('/', function(req, res, next) {
-  Product.find(function (err, todos) {
+  Product.find(function (err, products) {
     if (err) return next(err);
-    res.json(todos);
+    res.json(products);
   });
 });
 
-/* POST /todos */
+/* POST /products */
 router.post('/', function(req, res, next) {
   Product.create(req.body, function (err, post) {
     if (err) return next(err);
@@ -19,7 +19,7 @@ router.post('/', function(req, res, next) {
   });
 });
 
-/* GET /todos/id */
+/* GET /products/id */
 router.get('/:id', function(req, res, next) {
   Product.findById(req.params.id, function (err, post) {
     if (err) return next(err);
@@ -27,7 +27,7 @@ router.get('/:id', function(req, res, next) {
   });
 });
 
-/* PUT /todos/:id */
+/* PUT /products/:id */
 router.put('/:id', function(req, res, next) {
   Product.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
     if (err) return next(err);
@@ -35,7 +35,7 @@ router.put('/:id', function(req, res, next) {
   });
 });
 
-/* DELETE /todos/:id */
+/* DELETE /products/:id */
 router.delete('/:id', function(req, res, next) {
   Product.findByIdAndRemove(req.params.id, req.body, function (err, post) {
     if (err) return next(err);
