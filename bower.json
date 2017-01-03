@@ -1,8 +1,8 @@
 {
-  "name": "angular-phonecat",
+  "name": "angular-mongoose-products",
   "description": "A starter project for AngularJS",
   "version": "0.0.0",
-  "homepage": "https://github.com/angular/angular-phonecat",
+  "homepage": "https://github.com/prerial/angular.mongoose.products.git",
   "license": "MIT",
   "private": true,
   "directory":"target/",
