@@ -1,132 +1,47 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html ng-app="sportsStore">
 <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-</head>
-<body>
-<h1><%= title %></h1>
 
-<ng-view></ng-view>
+    <title>Sports Store</title>
 
 <!-- Styles -->
 <link href="/bower_components/bootstrap/dist/css/bootstrap.css"  rel='stylesheet' />
 <link href="/bower_components/bootstrap/dist/css/bootstrap-theme.css" rel='stylesheet' />
+<link href="/css/main.css" rel='stylesheet' />
 <!-- Libraries -->
 <script src="/bower_components/angular/angular.min.js"></script>
 <script src="/bower_components/angular-route/angular-route.min.js"></script>
 <script src="/bower_components/angular-resource/angular-resource.min.js"></script>
+<script src="js/main.js"></script>
 
-<!-- Template -->
-<script type="text/ng-template" id="/index.html">
-    Search: <input type="text" ng-model="search.name">
-    <ul>
-        <li ng-repeat="product in products | filter: search">
-            <input type="checkbox" ng-model="product.completed" ng-change="update($index)">
-            <a ng-show="!editing[$index]" href="#/{{product._id}}">{{product.name}}</a>
-            <button ng-show="!editing[$index]" ng-click="edit($index)">edit</button>
+</head>
 
-            <input ng-show="editing[$index]" type="text" ng-model="product.name">
-            <button ng-show="editing[$index]" ng-click="update($index)">Update</button>
-            <button ng-show="editing[$index]" ng-click="cancel($index)">Cancel</button>
-            <button ng-show="!editing[$index]" ng-click="remove($index)">remove</button>
-        </li>
-    </ul>
-    New task <input type="text" ng-model="newProduct"><button ng-click="save()">Create</button>
-</script>
+<body ng-controller="sportsStoreCtrl">
 
-<script type="text/ng-template" id="/productDetails.html">
-    <h1>{{ product.name }}</h1>
-    completed: <input type="checkbox" ng-model="product.completed"><br>
-    note: <textarea ng-model="product.note"></textarea><br><br>
+<div class="navbar navbar-inverse">
+    <a class="navbar-brand" href="#">SPORTS STORE</a>
+</div>
+<div class="panel panel-default row" ng-controller="productListCtrl">
+    <div class="col-xs-3">
+        <a ng-click="selectCategory()"
+           class="btn btn-block btn-default btn-lg">Home</a>
+        <a ng-repeat="item in data.products | orderBy:'category' | unique:'category'"
+           ng-click="selectCategory(item)" ng-class="getCategoryClass(item)" class=" btn btn-block btn-default btn-lg">
+            {{item}}
+        </a>
+    </div>
+    <div class="col-xs-8">
+        <div class="well" ng-repeat="item in data.products|filter:categoryFilterFn">
+            <h3>
+                <strong>{{item.name}}</strong>
+                <span class="pull-right label label-primary">
+                {{item.price | currency}}
+                </span>
+            </h3>
+            <span class="lead">{{item.description}}</span>
+        </div>
+    </div>
+</div>
 
-    <button ng-click="update()">Update</button>
-    <button ng-click="remove()">Remove</button>
-    <a href="/">Cancel</a>
-</script>
-
-
-<script>
-    angular.module('app', ['ngRoute', 'ngResource'])
-
-            //---------------
-            // Services
-            //---------------
-
-            .factory('Products', ['$resource', function($resource){
-                return $resource('/products/:id', null, {
-                    'update': { method:'PUT' }
-                });
-            }])
-
-            //---------------
-            // Controllers
-            //---------------
-
-            .controller('ProductController', ['$scope', 'Products', function ($scope, Products) {
-                $scope.editing = [];
-                $scope.products = Products.query();
-
-                $scope.save = function(){
-                    if(!$scope.newProduct || $scope.newProduct.length < 1) return;
-                    var product = new Products({ name: $scope.newProduct, description: '', category: '', price: 0, completed: false });
-
-
-                    product.$save(function(){
-                        $scope.products.push(product);
-                        $scope.newProduct = ''; // clear textbox
-                    });
-                };
-
-                $scope.update = function(index){
-                    var product = $scope.products[index];
-                    Products.update({id: product._id}, product);
-                    $scope.editing[index] = false;
-                };
-
-                $scope.edit = function(index){
-                    $scope.editing[index] = angular.copy($scope.products[index]);
-                };
-
-                $scope.cancel = function(index) {
-                    $scope.products[index] = angular.copy($scope.editing[index]);
-                    $scope.editing[index] = false;
-                };
-
-                $scope.remove = function(index){
-                    var product = $scope.products[index];
-                    Products.remove({id: product._id}, function(){
-                        $scope.products.splice(index, 1);
-                    });
-                }
-            }])
-
-            .controller('ProductDetailCtrl', ['$scope', '$routeParams', 'Products', '$location', function ($scope, $routeParams, Products, $location) {
-                $scope.product = Products.get({id: $routeParams.id });
-
-                $scope.remove = function(){
-                    Products.remove({id: $scope.product._id}, function(){
-                        $location.url('/');
-                    });
-                }
-            }])
-
-            //---------------
-            // Routes
-            //---------------
-
-            .config(['$routeProvider', function ($routeProvider) {
-                $routeProvider
-                        .when('/', {
-                            templateUrl: '/index.html',
-                            controller: 'ProductController'
-                        })
-
-                        .when('/:id', {
-                            templateUrl: '/productDetails.html',
-                            controller: 'ProductDetailCtrl'
-                        });
-            }]);
-</script>
 </body>
 </html>
