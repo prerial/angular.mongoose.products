@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		ngtemplates:    {
-			sportstore:          {
+			sportsStore:          {
 				src:        'client/src/**/*.html',
 				dest:       'client/target/js/templates.js',
 				options:    {
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
 				separator: ';'
 			},
 			dist: {
-				src: [modules, '<%= ngtemplates.sportstore.dest %>', app_files, controllers ],
+				src: [modules, '<%= ngtemplates.sportsStore.dest %>', app_files, controllers ],
 				dest: output
 			},
 			test: {

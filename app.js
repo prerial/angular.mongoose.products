@@ -38,6 +38,7 @@ app.use(cookieParser());
 app.use('/bower_components', express.static(path.join(__dirname, 'client/target/bower_components')));
 app.use('/js', express.static(path.join(__dirname, 'client/target/js')));
 app.use('/css', express.static(path.join(__dirname, 'client/target/css')));
+app.use('/views', express.static(path.join(__dirname, 'client/target/views')));
 
 app.use('/', routes);
 app.use('/users', users);
