@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var routes = require('./server/routes/index');
 var users = require('./server/routes/users');
 var products = require('./server/routes/products');
+var orders = require('./server/routes/orders');
 
 // load mongoose package
 var mongoose = require('mongoose');
@@ -41,8 +42,10 @@ app.use('/css', express.static(path.join(__dirname, 'client/target/css')));
 app.use('/views', express.static(path.join(__dirname, 'client/target/views')));
 
 app.use('/', routes);
-app.use('/users', users);
+//app.use('/users', users);
+app.use('/login', users);
 app.use('/products', products);
+app.use('/orders', orders);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
