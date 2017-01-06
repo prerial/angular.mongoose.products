@@ -1,19 +1,19 @@
 var express = require('express');
 var router = express.Router();
 
-var User = require('../models/User.js');
+var Product = require('../models/Order.js');
 
 /* GET /products listing. */
 router.get('/', function(req, res, next) {
-  User.find(function (err, users) {
+  Product.find(function (err, products) {
     if (err) return next(err);
-    res.json(users);
+    res.json(products);
   });
 });
 
 /* POST /products */
 router.post('/', function(req, res, next) {
-  User.create(req.body, function (err, post) {
+  Product.create(req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
@@ -21,7 +21,7 @@ router.post('/', function(req, res, next) {
 
 /* GET /products/id */
 router.get('/:id', function(req, res, next) {
-  User.findById(req.params.id, function (err, post) {
+  Product.findById(req.params.id, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
@@ -29,7 +29,7 @@ router.get('/:id', function(req, res, next) {
 
 /* PUT /products/:id */
 router.put('/:id', function(req, res, next) {
-  User.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
+  Product.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
@@ -37,7 +37,7 @@ router.put('/:id', function(req, res, next) {
 
 /* DELETE /products/:id */
 router.delete('/:id', function(req, res, next) {
-  User.findByIdAndRemove(req.params.id, req.body, function (err, post) {
+  Product.findByIdAndRemove(req.params.id, req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });

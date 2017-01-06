@@ -6,4 +6,9 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'AngularJS-index' });
 });
 
+/* GET admin page. */
+router.get('/users', function(req, res, next) {
+  res.render('admin', { title: 'AngularJS-index' });
+});
+
 module.exports = router;
