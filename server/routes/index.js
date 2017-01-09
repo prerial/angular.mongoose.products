@@ -11,4 +11,9 @@ router.get('/users', function(req, res, next) {
   res.render('admin', { title: 'AngularJS-index' });
 });
 
+/* GET examples page. */
+router.get('/examples', function(req, res, next) {
+  res.render('examples', { title: 'AngularJS-index' });
+});
+
 module.exports = router;

@@ -1,5 +1,7 @@
 (function() {
     'use strict';
+
+    angular.module("exampleApp", []);
     angular.module("cart", []);
     angular.module('sportsStore', ['ngRoute', 'ngResource', 'customFilters', 'cart'])
         .constant("productListActiveClass", "btn-primary")
